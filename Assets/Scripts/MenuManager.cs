@@ -20,7 +20,7 @@ public class MenuManager : MonoBehaviour
         panelLoading.SetActive(true);
         textLoading.text = "99 %";
         imgLoading.fillAmount = 0.99f;
-        //SceneManager.LoadScene("關卡1");
+        
         StartCoroutine(Loading());
     }
 
@@ -30,8 +30,10 @@ public class MenuManager : MonoBehaviour
     /// <returns></returns>
     public IEnumerator Loading()
     {
-        print("載入中....");
-        yield return new WaitForSeconds(1);
-        print("載入中........123456");
+        //SceneManager.LoadScene("關卡1");
+
+
+        yield return null;
+        
     }
 }
