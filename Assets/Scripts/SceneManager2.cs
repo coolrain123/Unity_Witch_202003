@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
-public class SceneManager : MonoBehaviour
+public class SceneManager2 : MonoBehaviour
 {
     private Image imgcross;
     private void Start()

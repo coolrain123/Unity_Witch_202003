@@ -1,7 +1,8 @@
-﻿
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class MenuManager : MonoBehaviour
 {
@@ -18,9 +19,8 @@ public class MenuManager : MonoBehaviour
     {
         print("開始載入....");
         panelLoading.SetActive(true);
-        textLoading.text = "99 %";
-        imgLoading.fillAmount = 0.99f;
-        
+
+        //SceneManager.LoadScene("關卡1");
         StartCoroutine(Loading());
     }
 
@@ -30,10 +30,19 @@ public class MenuManager : MonoBehaviour
     /// <returns></returns>
     public IEnumerator Loading()
     {
-        //SceneManager.LoadScene("關卡1");
+        AsyncOperation ao = SceneManager.LoadSceneAsync("學院介面");
 
+        ao.allowSceneActivation = false; //是否自動載入畫面 = 否
+        while (ao.progress < 1)
+        {
+            print("關卡進度" + ao.progress);
+            yield return null;
 
-        yield return null;
-        
+            textLoading.text = (ao.progress / 0.9 * 100).ToString("F2") + "  %";
+            imgLoading.fillAmount = ao.progress;
+
+            if (ao.progress == 0.9f)
+                ao.allowSceneActivation = true;
+        }
     }
 }
