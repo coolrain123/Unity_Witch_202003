@@ -339,7 +339,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.459831
+  orthographic size: 14.364498
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -363,7 +363,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 17.2, y: 5.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -382,8 +382,8 @@ GameObject:
   - component: {fileID: 552836362}
   - component: {fileID: 552836361}
   m_Layer: 0
-  m_Name: New SpriteShapeController (1)
-  m_TagString: Untagged
+  m_Name: "\u5730\u677F"
+  m_TagString: "\u5730\u677F"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -534,8 +534,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552836360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.891, y: -7.63, z: 0}
-  m_LocalScale: {x: 5.746, y: 1, z: 1}
+  m_LocalPosition: {x: 22.85, y: -7.63, z: 0}
+  m_LocalScale: {x: 25.686918, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1240,17 +1240,17 @@ PrefabInstance:
     - target: {fileID: 7338544117176391374, guid: 072064e5ec0a37440997768cf5b7263f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.72951216
+      value: -0.96921694
       objectReference: {fileID: 0}
     - target: {fileID: 7338544117176391374, guid: 072064e5ec0a37440997768cf5b7263f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6839679
+      value: 0.2462081
       objectReference: {fileID: 0}
     - target: {fileID: 7338544117176391374, guid: 072064e5ec0a37440997768cf5b7263f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 626.309
+      value: 568.506
       objectReference: {fileID: 0}
     - target: {fileID: 7354675801854463598, guid: 072064e5ec0a37440997768cf5b7263f,
         type: 3}
@@ -1361,7 +1361,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &876278239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,9 +1374,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b538981f2d3cade43b5209856213cd77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpHeight: 5
-  ani: {fileID: 876278235}
+  speed: 10
+  jumpHeight: 400
+  flashLength: 20
 --- !u!114 &876278240
 MonoBehaviour:
   m_ObjectHideFlags: 0
