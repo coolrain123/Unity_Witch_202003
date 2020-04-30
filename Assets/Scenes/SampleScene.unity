@@ -399,7 +399,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.00000023841858}
   m_SpriteTilingProperty:
@@ -942,6 +942,31 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.29
       objectReference: {fileID: 0}
+    - target: {fileID: 1765831417854789606, guid: 072064e5ec0a37440997768cf5b7263f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765831417854789606, guid: 072064e5ec0a37440997768cf5b7263f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765831417854789606, guid: 072064e5ec0a37440997768cf5b7263f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.95781684
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765831417854789606, guid: 072064e5ec0a37440997768cf5b7263f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.28737947
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765831417854789606, guid: 072064e5ec0a37440997768cf5b7263f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2693886615157474380, guid: 072064e5ec0a37440997768cf5b7263f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1339,7 +1364,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.3744721, y: 8.1}
+  m_Size: {x: 2.3744721, y: 8.099998}
   m_EdgeRadius: 0
 --- !u!50 &876278238
 Rigidbody2D:

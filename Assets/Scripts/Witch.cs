@@ -12,12 +12,17 @@ public class Witch : MonoBehaviour
 
     private Animator ani;
     private Rigidbody2D rig;
-    private bool isGround;
+    
+    private bool isAttack;
+    private bool isFlash;
+
     private void Start()
     {
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody2D>();
-        isGround = true;
+       
+        isAttack = false;
+        isAttack = false;
     }
 
     
@@ -27,16 +32,18 @@ public class Witch : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
+           
         }
         Move();
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) )
         {
             Attack();
+            isAttack = false;
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)&&isFlash ==false)
         {
-            ani.SetTrigger("Flash");
             StartCoroutine(Flash());
+            isFlash = false;
         }
         if (Input.GetMouseButtonDown(2))
         {
@@ -79,27 +86,33 @@ public class Witch : MonoBehaviour
 
     }
 
+    
     public void Jump()
     {
-        if (isGround)
-        {
-            isGround = false;
+       
             rig.AddForce(new Vector2(0, jumpHeight));
             ani.SetTrigger("Jump");
-        }             
+                   
     }
 
     public void Attack()
     {
-        ani.SetTrigger("Attack");
+        if(isAttack == false)
+        {
+            isAttack = true;
+            ani.SetTrigger("Attack");
+        }
+        
     }
 
     public IEnumerator Flash()
     {
-        yield return new WaitForSeconds(0.6f);
-        transform.Translate(flashLength, 0, 0);
        
+        ani.SetTrigger("Flash");
+        yield return new WaitForSeconds(0.6f);
+        transform.Translate(flashLength, 0, 0);       
     }
 
+   
     
 }
