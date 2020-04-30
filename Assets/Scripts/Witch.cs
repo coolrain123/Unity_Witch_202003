@@ -5,45 +5,45 @@ public class Witch : MonoBehaviour
 {
     [Header("移動速度"), Range(1, 1000)]
     public float speed = 5;
-    [Header("跳躍高度"), Range(1, 1000)]
-    public float jumpHeight = 3;
+    [Header("跳躍力度"), Range(1, 1000)]
+    public float jumpHeight = 400;
     [Header("閃現距離"), Range(1, 1000)]
     public float flashLength = 3;
+    [Header("玩家資料")]
+    public PlayerData Data; 
 
     private Animator ani;
     private Rigidbody2D rig;
-    
+
+    private bool isGrounded;
     private bool isAttack;
     private bool isFlash;
+    private bool isAction;
 
     private void Start()
     {
         ani = GetComponent<Animator>();
-        rig = GetComponent<Rigidbody2D>();
-       
-        isAttack = false;
-        isAttack = false;
+        rig = GetComponent<Rigidbody2D>();      
+        
     }
 
     
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded ==true)
         {
-            Jump();
-           
+            Jump();           
         }
         Move();
-        if (Input.GetMouseButtonDown(0) )
+        if (Input.GetMouseButtonDown(0) && isAttack == false)
         {
-            Attack();
-            isAttack = false;
+            StartCoroutine(Attack());            
         }
-        if (Input.GetMouseButtonDown(1)&&isFlash ==false)
+        if (Input.GetMouseButtonDown(1) && isFlash ==false)
         {
             StartCoroutine(Flash());
-            isFlash = false;
+            
         }
         if (Input.GetMouseButtonDown(2))
         {
@@ -87,32 +87,42 @@ public class Witch : MonoBehaviour
     }
 
     
-    public void Jump()
-    {
-       
-            rig.AddForce(new Vector2(0, jumpHeight));
-            ani.SetTrigger("Jump");
-                   
-    }
+    
 
-    public void Attack()
+    public IEnumerator Attack()
     {
-        if(isAttack == false)
-        {
-            isAttack = true;
-            ani.SetTrigger("Attack");
-        }
-        
-    }
+        isAttack = true;
+        ani.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.01f);
+        isAttack = false;
+    }           
 
     public IEnumerator Flash()
     {
-       
+        isFlash = true;
         ani.SetTrigger("Flash");
         yield return new WaitForSeconds(0.6f);
-        transform.Translate(flashLength, 0, 0);       
+        transform.Translate(flashLength, 0, 0);
+        yield return new WaitForSeconds(Data.flashCD);
+        isFlash = false;        
     }
 
-   
-    
+    public void Jump()
+    { 
+        if(isGrounded == true)
+        {
+            isGrounded = false;
+            rig.AddForce(new Vector2(0, jumpHeight));
+            ani.SetTrigger("Jump");
+        }       
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "地板")
+        {
+            isGrounded = true;
+            print("在地上");
+        }
+    }
 }
