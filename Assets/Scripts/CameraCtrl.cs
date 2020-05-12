@@ -15,8 +15,8 @@ public class CameraCtrl : MonoBehaviour
     public void Track()
     {
         Vector3 witpos = Witch.position;       
-        witpos.y = 7.5f;
-        witpos.z = -1f;
+        witpos.y -= 7.5f;
+        witpos.z -= -1f;
         transform.position = Vector3.Lerp(transform.position, witpos, 0.4f * Time.deltaTime * speed);
     }
 }
