@@ -272,9 +272,9 @@ TextureImporter:
       name: object_sheet_c1_0
       rect:
         serializedVersion: 2
-        x: 9
+        x: 75
         y: 972
-        width: 546
+        width: 445
         height: 308
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -440,9 +440,9 @@ TextureImporter:
       name: object_sheet_c1_8
       rect:
         serializedVersion: 2
-        x: 206
+        x: 201
         y: 641
-        width: 209
+        width: 211
         height: 332
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

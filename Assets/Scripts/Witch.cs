@@ -4,14 +4,15 @@ using System.Collections;
 public class Witch : MonoBehaviour
 {
     [Header("移動速度"), Range(1, 1000)]
-    public float speed = 5;
+    public float speed = 10;
     [Header("跳躍力度"), Range(1, 1000)]
     public float jumpHeight = 400;
     [Header("閃現距離"), Range(1, 1000)]
     public float flashLength = 3;
     [Header("玩家資料")]
-    public PlayerData Data; 
+    public PlayerData Data;
 
+    public Joystick joy;
     private Animator ani;
     private Rigidbody2D rig;
 
@@ -31,6 +32,7 @@ public class Witch : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Space)&& isGrounded ==true)
         {
             Jump();           
@@ -53,7 +55,7 @@ public class Witch : MonoBehaviour
     public void Move()
     {
         if (Input.GetKey(KeyCode.D))
-        {
+        {            
             ani.SetBool("Walk", true);
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
@@ -64,7 +66,7 @@ public class Witch : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.A))
-        {
+        {            
             ani.SetBool("Walk", true);
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
@@ -78,9 +80,9 @@ public class Witch : MonoBehaviour
         float h = Input.GetAxis("Horizontal"); //Horizontal:AD左右
         transform.Translate(speed * Time.deltaTime *Mathf.Abs(h), 0, 0);
 
-        //float joyv = joy.Vertical;
-        //float joyh = joy.Horizontal;
-        //transform.Translate(speed * Time.deltaTime * joyh, 0, speed * Time.deltaTime * joyv);
+       // float joyv = joy.Vertical;
+       // float joyh = joy.Horizontal;
+       // transform.Translate(speed * Time.deltaTime * joyh, 0, speed * Time.deltaTime * joyv);
 
         Vector2 pos = transform.position;    
 
@@ -91,10 +93,12 @@ public class Witch : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        ani.SetBool("Walk", false);
+        speed = 0;
         isAttack = true;
         ani.SetTrigger("Attack");
         yield return new WaitForSeconds(0.01f);
-        isAttack = false;
+        isAttack = false;        
     }           
 
     public IEnumerator Flash()
