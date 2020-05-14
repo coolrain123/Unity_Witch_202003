@@ -32,12 +32,12 @@ public class Witch : MonoBehaviour
 
     private void Update()
     {
-        
+        speed = 10;
+        Move();
         if (Input.GetKeyDown(KeyCode.Space)&& isGrounded ==true)
         {
             Jump();           
-        }
-        Move();
+        }       
         if (Input.GetMouseButtonDown(0) && isAttack == false)
         {
             StartCoroutine(Attack());            

@@ -9,15 +9,20 @@ public class CameraCtrl : MonoBehaviour
 
     private void LateUpdate()
     {
-        Track();
+        CameraTrack();
     }
 
-    public void Track()
+    public void CameraTrack()
     {
         Vector3 witpos = Witch.position;       
         witpos.y = 7.5f;
         witpos.z = -1f;
         transform.position = Vector3.Lerp(transform.position, witpos, 0.4f * Time.deltaTime * speed);
+
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, 10.7f, 70);
+   
+        transform.position = pos;
     }
 }
 

@@ -7,7 +7,7 @@ TextureImporter:
     second: object_sheet_c1_0
   - first:
       213: 4160243426061034410
-    second: object_sheet_c1_1
+    second: BIGGGTREE
   - first:
       213: -2604976884331339280
     second: object_sheet_c1_2
@@ -31,13 +31,13 @@ TextureImporter:
     second: object_sheet_c1_8
   - first:
       213: -283129869133838793
-    second: object_sheet_c1_9
+    second: STONE1
   - first:
       213: -7235169507377509240
-    second: object_sheet_c1_10
+    second: STONE2
   - first:
       213: 7555625607126046483
-    second: object_sheet_c1_11
+    second: STONE13
   - first:
       213: -5042806588356135978
     second: object_sheet_c1_12
@@ -82,13 +82,13 @@ TextureImporter:
     second: object_sheet_c1_25
   - first:
       213: 2339610481697641359
-    second: object_sheet_c1_26
+    second: CIRCLETREE
   - first:
       213: -9137938265618868848
-    second: object_sheet_c1_27
+    second: Grass1
   - first:
       213: 7079735718330582369
-    second: object_sheet_c1_28
+    second: Grass2
   - first:
       213: -8163056869827027612
     second: object_sheet_c1_29
@@ -127,7 +127,7 @@ TextureImporter:
     second: object_sheet_c1_40
   - first:
       213: 5988063927249976349
-    second: object_sheet_c1_41
+    second: Grass3
   - first:
       213: -4354502868710735142
     second: object_sheet_c1_42
@@ -272,9 +272,9 @@ TextureImporter:
       name: object_sheet_c1_0
       rect:
         serializedVersion: 2
-        x: 75
-        y: 972
-        width: 445
+        x: 44
+        y: 970
+        width: 505
         height: 308
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -290,13 +290,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_1
+      name: BIGGGTREE
       rect:
         serializedVersion: 2
         x: 656
-        y: 643
+        y: 696
         width: 639
-        height: 637
+        height: 584
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -443,7 +443,7 @@ TextureImporter:
         x: 201
         y: 641
         width: 211
-        height: 332
+        height: 323
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -458,7 +458,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_9
+      name: STONE1
       rect:
         serializedVersion: 2
         x: 1343
@@ -479,7 +479,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_10
+      name: STONE2
       rect:
         serializedVersion: 2
         x: 1520
@@ -500,7 +500,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_11
+      name: STONE13
       rect:
         serializedVersion: 2
         x: 1778
@@ -567,9 +567,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1294
-        y: 650
+        y: 685
         width: 226
-        height: 221
+        height: 186
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -815,7 +815,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_26
+      name: CIRCLETREE
       rect:
         serializedVersion: 2
         x: 955
@@ -836,7 +836,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_27
+      name: Grass1
       rect:
         serializedVersion: 2
         x: 1457
@@ -857,7 +857,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_28
+      name: Grass2
       rect:
         serializedVersion: 2
         x: 1702
@@ -881,8 +881,8 @@ TextureImporter:
       name: object_sheet_c1_29
       rect:
         serializedVersion: 2
-        x: 650
-        y: 35
+        x: 652
+        y: 11
         width: 296
         height: 595
       alignment: 0
@@ -1130,7 +1130,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: object_sheet_c1_41
+      name: Grass3
       rect:
         serializedVersion: 2
         x: 1478
@@ -1344,9 +1344,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1520
-        y: 666
+        y: 681
         width: 200
-        height: 207
+        height: 192
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1365,9 +1365,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1722
-        y: 659
+        y: 679
         width: 196
-        height: 214
+        height: 194
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
