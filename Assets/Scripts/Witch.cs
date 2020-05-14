@@ -11,6 +11,14 @@ public class Witch : MonoBehaviour
     public float flashLength = 3;
     [Header("玩家資料")]
     public PlayerData Data;
+    [Header("魔法彈")]
+    public GameObject magicBall;
+    [Header("閃現")]
+    public GameObject magicFlash;
+
+    public Transform magicPos;
+    public Transform flashPos;
+
 
     public Joystick joy;
     private Animator ani;
@@ -32,7 +40,7 @@ public class Witch : MonoBehaviour
 
     private void Update()
     {
-        speed = 10;
+       
         Move();
         if (Input.GetKeyDown(KeyCode.Space)&& isGrounded ==true)
         {
@@ -51,6 +59,7 @@ public class Witch : MonoBehaviour
         {
             ani.SetBool("Cast", true);
         }
+       
     }
     public void Move()
     {
@@ -97,18 +106,30 @@ public class Witch : MonoBehaviour
         speed = 0;
         isAttack = true;
         ani.SetTrigger("Attack");
-        yield return new WaitForSeconds(0.01f);
-        isAttack = false;        
+        yield return new WaitForSeconds(0.5f);
+        GameObject temp =  Instantiate(magicBall, new Vector3(magicPos.position.x, magicPos.position.y, 0), transform.rotation);
+        
+        temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 1000);        
+        yield return new WaitForSeconds(0.5f);
+        isAttack = false;
+        speed = 10;
+        
     }           
 
     public IEnumerator Flash()
     {
+        speed = 0;
+        Instantiate(magicFlash, new Vector3(flashPos.position.x, flashPos.position.y, 0), Quaternion.Euler(-41,0,0));
         isFlash = true;
         ani.SetTrigger("Flash");
+       
         yield return new WaitForSeconds(0.6f);
+        speed = 10;
         transform.Translate(flashLength, 0, 0);
         yield return new WaitForSeconds(Data.flashCD);
-        isFlash = false;        
+        
+        isFlash = false;
+        
     }
 
     public void Jump()

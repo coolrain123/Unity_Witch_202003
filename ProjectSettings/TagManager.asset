@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - "\u5730\u677F"
+  - FxTemporaire
+  - "\u9B54\u6CD5"
   layers:
   - Default
   - TransparentFX
