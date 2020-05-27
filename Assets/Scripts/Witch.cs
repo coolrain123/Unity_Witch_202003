@@ -11,15 +11,20 @@ public class Witch : MonoBehaviour
     public float flashLength = 3;
     [Header("玩家資料")]
     public PlayerData Data;
+
     [Header("魔法彈")]
-    public GameObject magicBall;
+    public GameObject magicBall;   
     [Header("閃現")]
     public GameObject magicFlash;
+
+    [Header("魔法彈音效")]
+    public AudioClip audMagicBall;
+
 
     public Transform magicPos;
     public Transform flashPos;
 
-
+    AudioSource aud;
     public Joystick joy;
     private Animator ani;
     private Rigidbody2D rig;
@@ -27,10 +32,11 @@ public class Witch : MonoBehaviour
     private bool isGrounded;
     private bool isAttack;
     private bool isFlash;
-    private bool isAction;
+    
 
     private void Start()
     {
+        aud = GetComponent<AudioSource>();
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody2D>();      
         
@@ -102,10 +108,12 @@ public class Witch : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        
         ani.SetBool("Walk", false);
         speed = 0;
-        isAttack = true;
+        isAttack = true;        
         ani.SetTrigger("Attack");
+        aud.PlayOneShot(audMagicBall, 0.7f);
         yield return new WaitForSeconds(0.5f);
         GameObject temp =  Instantiate(magicBall, new Vector3(magicPos.position.x, magicPos.position.y, 0), transform.rotation);
         
