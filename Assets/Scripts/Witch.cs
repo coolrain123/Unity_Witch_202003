@@ -116,8 +116,11 @@ public class Witch : MonoBehaviour
         aud.PlayOneShot(audMagicBall, 0.7f);
         yield return new WaitForSeconds(0.5f);
         GameObject temp =  Instantiate(magicBall, new Vector3(magicPos.position.x, magicPos.position.y, 0), transform.rotation);
+       
+        temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 1000);
+        temp.AddComponent<Bullet>().damage = Data.damage;
+        temp.GetComponent<Bullet>().player = true;
         
-        temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 1000);        
         yield return new WaitForSeconds(0.5f);
         isAttack = false;
         speed = 10;

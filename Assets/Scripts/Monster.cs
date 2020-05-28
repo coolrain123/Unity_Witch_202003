@@ -1,6 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Monster : MonoBehaviour
 {
@@ -20,11 +21,14 @@ public class Monster : MonoBehaviour
     //public SpriteRenderer[] spr;
 
     private float hp;
-   
+    private float hpMax;
+    private float r;
+    public Image imgHP;
 
     void Start()
     {
         hp = Data.HP;
+        hpMax = Data.HpMax;
     }
 
     // Update is called once per frame
@@ -36,14 +40,15 @@ public class Monster : MonoBehaviour
         {
             print(timer);
             timer = 0;
-            
-            float r = Random.Range(0f, 1f);
+
+            r = Random.Range(0f, 1f);
+
             print(r);
-            if (r < 0.5) walk();
-            else idle();
+            
         }
 
-
+        if (r < 0.5) walk();
+        else idle();
 
     }
 
@@ -67,14 +72,26 @@ public class Monster : MonoBehaviour
     private void dead()
     {
         ani.SetTrigger("Dead");
-    }
-    private void hurt()
-    {
-        GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
-        GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.red;
-        Invoke("reColor", 0.2f);
+        
     }
 
+    public Material monMaterial;
+
+    public void hurt(float damage)
+    {
+        hp -= damage;
+        monMaterial.color = Color.red;
+        imgHP.fillAmount = hp / hpMax;
+        Invoke("reColor", 0.2f);
+
+        if (hp == 0) dead();
+              
+    }
+    private void reColor()
+    {
+        monMaterial.color = Color.white;
+       
+    }
 
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -83,10 +100,7 @@ public class Monster : MonoBehaviour
         {
             attack();
         }
-        if (other.gameObject.tag == "魔法")
-        {
-            hurt();           
-        }
+      
     }
    
 
