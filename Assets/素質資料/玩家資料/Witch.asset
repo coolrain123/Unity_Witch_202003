@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 200
   HpMax: 100
-  damage: 50
+  damage: 100
   flashCD: 5

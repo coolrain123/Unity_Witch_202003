@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Witch : MonoBehaviour
@@ -16,7 +17,8 @@ public class Witch : MonoBehaviour
     public GameObject magicBall;   
     [Header("閃現")]
     public GameObject magicFlash;
-
+    [Header("閃現按鈕")]
+    public Button btnFlash;
     [Header("魔法彈音效")]
     public AudioClip audMagicBall;
 
@@ -38,12 +40,15 @@ public class Witch : MonoBehaviour
     {
         aud = GetComponent<AudioSource>();
         ani = GetComponent<Animator>();
-        rig = GetComponent<Rigidbody2D>();      
-        
+        rig = GetComponent<Rigidbody2D>();
+        btnFlash.onClick.AddListener(UseFlash);
     }
 
     
-
+    private void UseFlash()
+    {
+        StartCoroutine(Flash());
+    }
     private void Update()
     {
        

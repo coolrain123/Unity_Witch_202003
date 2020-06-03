@@ -9,8 +9,8 @@ public class MonsterData : ScriptableObject
     [Header("攻擊冷卻"), Range(0, 1.5f)]
     public float cd = 0.7f;
    
-    [Header("攻擊力"), Range(50, 1000)]
-    public float damage;
+    [Header("攻擊力"), Range(1f, 1000f)]
+    public float damage = 2f;
 
 
 }

@@ -12,14 +12,17 @@ public class MenuManager : MonoBehaviour
     public Text textLoading;
     [Header("載入畫面讀條")]
     public Image imgLoading;
+    [Header("載入畫面音效")]
+    public AudioClip audStart;
 
-
+    public AudioSource aud;
 
     public void StartLoading()
     {
+        aud = GetComponent<AudioSource>();
+        aud.PlayOneShot(audStart, 0.7f);
         print("開始載入....");
-        panelLoading.SetActive(true);
-
+        panelLoading.SetActive(true);        
         //SceneManager.LoadScene("關卡1");
         StartCoroutine(Loading());
     }
@@ -31,7 +34,7 @@ public class MenuManager : MonoBehaviour
     public IEnumerator Loading()
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync("學院介面");
-
+       
         ao.allowSceneActivation = false; //是否自動載入畫面 = 否
         while (ao.progress < 1)
         {

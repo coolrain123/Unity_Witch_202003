@@ -1,6 +1,6 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 
 public class Monster : MonoBehaviour
@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
     public Transform atkTri;
     [Header("怪物資料")]
     public MonsterData Data;
+
     //[Header("補血藥水")]
     //public GameObject propHp;
     //[Header("加速藥水")]
@@ -20,15 +21,19 @@ public class Monster : MonoBehaviour
     //public GameObject bullet;
     //public SpriteRenderer[] spr;
 
+    private HpValueManager hpValueManager;
+
     private float hp;
     private float hpMax;
     private float r;
     public Image imgHP;
+    public Text textDmg;
 
     void Start()
     {
         hp = Data.HP;
         hpMax = Data.HpMax;
+        hpValueManager = GetComponentInChildren<HpValueManager>();
     }
 
     // Update is called once per frame
@@ -45,9 +50,10 @@ public class Monster : MonoBehaviour
 
             print(r);
             
+            
         }
 
-        if (r < 0.5) walk();
+        if (r < 0) walk();
         else idle();
 
     }
@@ -55,13 +61,18 @@ public class Monster : MonoBehaviour
     private void walk()
     {
         ani.SetBool("Walk", true);
+
+        float walk = Random.Range(0f, 1f);
+        transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
         transform.Translate(-3 * Time.deltaTime, 0, 0);
 
+
+       
     }
     private void attack()
     {
         ani.SetBool("Walk", false);
-
+       
         ani.SetTrigger("Attack");
 
     }
@@ -69,10 +80,14 @@ public class Monster : MonoBehaviour
     {
         ani.SetBool("Walk", false);
     }
-    private void dead()
+  
+    private IEnumerator Dead()
     {
         ani.SetTrigger("Dead");
-        
+        GetComponent<Monster>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(3f);
+        Destroy(this);
     }
 
     public Material monMaterial;
@@ -81,10 +96,12 @@ public class Monster : MonoBehaviour
     {
         hp -= damage;
         monMaterial.color = Color.red;
-        imgHP.fillAmount = hp / hpMax;
+       // imgHP.fillAmount = hp / hpMax;
         Invoke("reColor", 0.2f);
-
-        if (hp == 0) dead();
+        
+        hpValueManager.SetHp(hp, hpMax);
+        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
+        if (hp == 0) StartCoroutine(Dead());
               
     }
     private void reColor()
