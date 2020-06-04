@@ -17,6 +17,10 @@ public class Witch : MonoBehaviour
     public GameObject magicBall;   
     [Header("閃現")]
     public GameObject magicFlash;
+    [Header("毒瓶")]
+    public GameObject poisonBattle;
+    [Header("毒瓶特效")]
+    public GameObject magicPoisonBattle;
     [Header("閃現按鈕")]
     public Button btnFlash;
     [Header("魔法彈音效")]
@@ -34,6 +38,7 @@ public class Witch : MonoBehaviour
     private bool isGrounded;
     private bool isAttack;
     private bool isFlash;
+    private bool isThrow;
     
 
     private void Start()
@@ -53,6 +58,10 @@ public class Witch : MonoBehaviour
     {
        
         Move();
+        if (Input.GetKeyDown(KeyCode.T) && isThrow == false)
+        {
+            StartCoroutine(ThrowBattle());
+        }
         if (Input.GetKeyDown(KeyCode.Space)&& isGrounded ==true)
         {
             Jump();           
@@ -148,6 +157,22 @@ public class Witch : MonoBehaviour
         
     }
 
+    public IEnumerator ThrowBattle()
+    {
+        speed = 0;
+        isThrow = true;
+        //GameObject temp = Instantiate();
+        
+        ani.SetTrigger("Throw");
+
+        yield return new WaitForSeconds(0.6f);
+        speed = 10;
+        
+        yield return new WaitForSeconds(Data.flashCD);
+
+        isThrow = false;
+
+    }
     public void Jump()
     { 
         if(isGrounded == true)
