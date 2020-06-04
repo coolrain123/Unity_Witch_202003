@@ -29,6 +29,7 @@ public class Witch : MonoBehaviour
 
     public Transform magicPos;
     public Transform flashPos;
+    public Transform throwPos;
 
     AudioSource aud;
     public Joystick joy;
@@ -168,7 +169,10 @@ public class Witch : MonoBehaviour
         //GameObject temp = Instantiate();
        
         ani.SetTrigger("Throw");
-
+        yield return new WaitForSeconds(0.7f);
+        GameObject temp = Instantiate(poisonBattle, throwPos.position+transform.right*2+transform.up*1, transform.rotation);
+        temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 1000);
+        temp.GetComponent<Rigidbody2D>().AddTorque(360);
         yield return new WaitForSeconds(0.9f);
         speed = 10;        
         yield return new WaitForSeconds(0.6f);

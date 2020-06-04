@@ -7,6 +7,10 @@ public class Monster : MonoBehaviour
 {
     public Animator ani;
     private float timer;
+    private float walkTimer;
+    int walkDirection = 0;
+    
+    
 
     [Header("攻擊觸發")]
     public Transform atkTri;
@@ -46,13 +50,11 @@ public class Monster : MonoBehaviour
             print(timer);
             timer = 0;
 
-            r = Random.Range(0f, 1f);
-
-            print(r);           
+            r = Random.Range(0f, 1f);                    
             
         }
 
-        if (r < 0) walk();
+        if (r < 0.5) walk();
         else idle();
 
     }
@@ -60,10 +62,30 @@ public class Monster : MonoBehaviour
     private void walk()
     {
         ani.SetBool("Walk", true);
+        walkTimer += Time.deltaTime;
+       
+        if (walkTimer>3)
+        {
+            walkTimer = 0;
+            walkDirection = Random.Range(1, 3);
+                      
+        }
 
-        float walk = Random.Range(0f, 1f);
-        transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
-        transform.Translate(-3 * Time.deltaTime, 0, 0);       
+        if (walkDirection == 1)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
+            transform.Translate(-3 * Time.deltaTime, 0, 0);
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
+        }
+        else if (walkDirection == 2)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);  //0或180??
+            transform.Translate(-3 * Time.deltaTime, 0, 0);
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        }
+
+
     }
     private void attack()
     {
@@ -83,7 +105,7 @@ public class Monster : MonoBehaviour
         GetComponent<Monster>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(3f);
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     public Material monMaterial;

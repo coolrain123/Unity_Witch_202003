@@ -8,7 +8,7 @@ public class HpValueManager : MonoBehaviour
     private Text HpText;
     private RectTransform HpRect;
     private Vector2 original;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class HpValueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // FixedAngle();
+       
     }
 
 
@@ -50,12 +50,12 @@ public class HpValueManager : MonoBehaviour
         HpText.text = mark + value;
         color.a = 0;                           //透明度=0
         HpText.color = color;
-        //HpRect.anchoredPosition = original;
+        HpRect.anchoredPosition = original;
 
         for (int i = 0; i < 40; i++)
         {
             HpText.color += new Color(0, 0, 0, 0.05f);
-            HpRect.anchoredPosition += Vector2.up * 0.3f;
+            HpRect.anchoredPosition += Vector2.up * 0.1f;
             yield return new WaitForSeconds(0.01f);
         }
 
