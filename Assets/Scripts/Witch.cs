@@ -39,6 +39,7 @@ public class Witch : MonoBehaviour
     private bool isAttack;
     private bool isFlash;
     private bool isThrow;
+    private bool isCasting;
     
 
     private void Start()
@@ -78,6 +79,7 @@ public class Witch : MonoBehaviour
         if (Input.GetMouseButtonDown(2))
         {
             ani.SetBool("Cast", true);
+
         }
        
     }
@@ -143,6 +145,8 @@ public class Witch : MonoBehaviour
 
     public IEnumerator Flash()
     {
+
+        //按鈕.fillamount歸0
         speed = 0;
         Instantiate(magicFlash, new Vector3(flashPos.position.x, flashPos.position.y, 0), Quaternion.Euler(-41,0,0));
         isFlash = true;
@@ -162,14 +166,12 @@ public class Witch : MonoBehaviour
         speed = 0;
         isThrow = true;
         //GameObject temp = Instantiate();
-        
+       
         ani.SetTrigger("Throw");
 
+        yield return new WaitForSeconds(0.9f);
+        speed = 10;        
         yield return new WaitForSeconds(0.6f);
-        speed = 10;
-        
-        yield return new WaitForSeconds(Data.flashCD);
-
         isThrow = false;
 
     }

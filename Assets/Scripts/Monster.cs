@@ -48,8 +48,7 @@ public class Monster : MonoBehaviour
 
             r = Random.Range(0f, 1f);
 
-            print(r);
-            
+            print(r);           
             
         }
 
@@ -64,10 +63,7 @@ public class Monster : MonoBehaviour
 
         float walk = Random.Range(0f, 1f);
         transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
-        transform.Translate(-3 * Time.deltaTime, 0, 0);
-
-
-       
+        transform.Translate(-3 * Time.deltaTime, 0, 0);       
     }
     private void attack()
     {
@@ -95,8 +91,7 @@ public class Monster : MonoBehaviour
     public void hurt(float damage)
     {
         hp -= damage;
-        monMaterial.color = Color.red;
-       // imgHP.fillAmount = hp / hpMax;
+        monMaterial.color = Color.red;      
         Invoke("reColor", 0.2f);
         
         hpValueManager.SetHp(hp, hpMax);

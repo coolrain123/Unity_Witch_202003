@@ -16,7 +16,7 @@ public class HpValueManager : MonoBehaviour
         HpBar = transform.GetChild(1).GetComponent<Image>();  //GetChild()   ()內跟陣列一樣  0 是第一個物件  1 才是第二個
         HpText = transform.GetChild(2).GetComponent<Text>();
         HpRect = transform.GetChild(2).GetComponent<RectTransform>();
-        original = transform.position;
+       
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class HpValueManager : MonoBehaviour
         HpText.text = mark + value;
         color.a = 0;                           //透明度=0
         HpText.color = color;
-        HpRect.anchoredPosition = original;
+        //HpRect.anchoredPosition = original;
 
         for (int i = 0; i < 40; i++)
         {
