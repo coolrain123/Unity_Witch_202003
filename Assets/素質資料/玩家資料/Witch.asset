@@ -16,3 +16,4 @@ MonoBehaviour:
   HpMax: 100
   damage: 50
   flashCD: 5
+  battleCD: 3

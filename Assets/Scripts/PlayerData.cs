@@ -8,13 +8,14 @@ public class PlayerData : ScriptableObject
     public float HpMax;
     
    
-    [Header("攻擊力"), Range(50, 1000)]
+    [Header("攻擊力"), Range(1, 1000)]
     public float damage;
 
     [Header("閃現冷卻"), Range(0, 10)]
     public float flashCD;
 
-
+    [Header("毒瓶冷卻"), Range(0, 10)]
+    public float battleCD;
 
 
 }

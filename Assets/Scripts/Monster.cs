@@ -13,7 +13,11 @@ public class Monster : MonoBehaviour
     
 
     [Header("攻擊觸發")]
-    public Transform atkTri;
+    public GameObject atkTri;
+    [Header("視野觸發")]
+    public GameObject seeTri;
+    [Header("攻擊特效")]
+    public GameObject atkEff;
     [Header("怪物資料")]
     public MonsterData Data;
 
@@ -32,12 +36,17 @@ public class Monster : MonoBehaviour
     private float r;
     public Image imgHP;
     public Text textDmg;
+    public Transform atkPos;
+    public Material monMaterial;
 
     void Start()
     {
+        //如何設定攻擊觸發與視野觸發
         hp = Data.HP;
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
+        atkTri = GameObject.Find("攻擊觸發");
+        seeTri = GameObject.Find("視野觸發");
     }
 
     // Update is called once per frame
@@ -82,7 +91,6 @@ public class Monster : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
             hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
-
         }
 
 
@@ -90,8 +98,9 @@ public class Monster : MonoBehaviour
     private void attack()
     {
         ani.SetBool("Walk", false);
-       
+        Instantiate(atkEff, new Vector3(atkPos.position.x,atkPos.position.y), Quaternion.identity);
         ani.SetTrigger("Attack");
+
 
     }
     private void idle()
@@ -108,7 +117,7 @@ public class Monster : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public Material monMaterial;
+   
 
     public void hurt(float damage)
     {
@@ -118,8 +127,23 @@ public class Monster : MonoBehaviour
         
         hpValueManager.SetHp(hp, hpMax);
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-        if (hp == 0) StartCoroutine(Dead());
+        if (hp <= 0) StartCoroutine(Dead());
               
+    }
+
+    public void poisoning(float damage)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            hp -= damage;
+            monMaterial.color = Color.green;
+            Invoke("reColor", 0.2f);
+        }
+       
+        hpValueManager.SetHp(hp, hpMax);
+        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
+        if (hp <= 0) StartCoroutine(Dead());
+
     }
     private void reColor()
     {
@@ -133,9 +157,10 @@ public class Monster : MonoBehaviour
         if (other.gameObject.tag == "玩家")
         {
             attack();
+            
         }
       
     }
-   
+  
 
 }
