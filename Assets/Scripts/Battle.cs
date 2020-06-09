@@ -19,8 +19,9 @@ public class Battle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //如何設定打到怪也會製造煙霧 還有如何持續傷害。
-        if (collision.transform.tag == "地板" || collision.transform.tag == "怪物")
+        if (collision.transform.tag == "地板" || collision.transform.tag =="怪物")
         {
+            print("打到怪");
             //Instantiate(magicPoisonBattle, transform.position, Quaternion.identity);
             GameObject temp =  Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
             temp.AddComponent<Bullet>().damage = 20;

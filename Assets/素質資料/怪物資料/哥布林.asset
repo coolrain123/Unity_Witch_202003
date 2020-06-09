@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 200
   HpMax: 200
-  cd: 0.7
+  cd: 3
   damage: 50
+  atkRange: 5
+  seeRange: 5

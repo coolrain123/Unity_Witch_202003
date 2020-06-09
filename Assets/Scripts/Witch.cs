@@ -192,31 +192,35 @@ public class Witch : MonoBehaviour
             speed = 10;
         }              
         
-    }           
-
+    }
+    float CD;
     public IEnumerator Flash()
     {
-
+        
         btnFlash.interactable = false;
         btnFlash.image.fillAmount = 0;
         speed = 0;
         Instantiate(magicFlash, new Vector3(flashPos.position.x, flashPos.position.y, 0), Quaternion.Euler(-41,0,0));
         isFlash = true;
         ani.SetTrigger("Flash");
+        
+        yield return new WaitForSeconds(0.6f);
+
+
       
 
-        yield return new WaitForSeconds(0.6f);
-        for (int i = 0; i < 50; i++)
-        {
-            btnFlash.image.fillAmount = Mathf.Lerp(0, 1, 0.2f);
-        }
         speed = 10;
-        transform.Translate(flashLength, 0, 0);
-      
+        transform.Translate(flashLength, 0, 0);            
         
-        yield return new WaitForSeconds(Data.flashCD);
+        while (CD < Data.flashCD)
+        {
+            CD += Time.deltaTime;
+            btnFlash.image.fillAmount = CD / Data.flashCD;
+            yield return null;
+        }
         btnFlash.interactable = true;
         isFlash = false;
+        CD = 0;
         
     }
 

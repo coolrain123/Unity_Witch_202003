@@ -12,10 +12,10 @@ public class Monster : MonoBehaviour
     
     
 
-    [Header("攻擊觸發")]
-    public GameObject atkTri;
-    [Header("視野觸發")]
-    public GameObject seeTri;
+    //[Header("攻擊觸發")]
+    //public GameObject atkTri;
+    //[Header("視野觸發")]
+    //public GameObject seeTri;
     [Header("攻擊特效")]
     public GameObject atkEff;
     [Header("怪物資料")]
@@ -45,13 +45,14 @@ public class Monster : MonoBehaviour
         hp = Data.HP;
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
-        atkTri = GameObject.Find("攻擊觸發");
-        seeTri = GameObject.Find("視野觸發");
+        //atkTri = GameObject.Find("攻擊觸發");
+        //seeTri = GameObject.Find("視野觸發");
     }
 
     // Update is called once per frame
     void Update()
     {
+        StartCoroutine(AttackCheck());
 
         timer += Time.deltaTime;
         if (timer > 3)
@@ -100,8 +101,6 @@ public class Monster : MonoBehaviour
         ani.SetBool("Walk", false);
         Instantiate(atkEff, new Vector3(atkPos.position.x,atkPos.position.y), Quaternion.identity);
         ani.SetTrigger("Attack");
-
-
     }
     private void idle()
     {
@@ -152,15 +151,39 @@ public class Monster : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D other)
+    
+
+
+
+
+    private IEnumerator AttackCheck()
     {
-        if (other.gameObject.tag == "玩家")
+
+        // RaycastHit hit;  //區域變數 碰撞資訊:用來存放射線打到的物件;
+
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position + new Vector3(0, 5, 0), -transform.right, 5);
+        
+        if(hit2D.collider.tag == "玩家")
         {
+            print("遇到玩家");
             attack();
-            
         }
-      
+        yield return new WaitForSeconds(Data.cd);
     }
-  
+
+    //繪製圖示，僅在場景顯示給開發者觀看
+    private void OnDrawGizmos()
+    {
+        //圖示顏色
+        Gizmos.color = Color.red;
+
+        //前方Z transform.forward
+        //右方X transform.right
+        //上方Y transform.up
+        //繪製射線(起點,方向*長度)
+        Gizmos.DrawRay(transform.position + new Vector3(0,5,0) , transform.right * -5);
+
+
+    }
 
 }
