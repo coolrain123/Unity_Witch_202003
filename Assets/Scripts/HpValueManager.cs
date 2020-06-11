@@ -52,10 +52,10 @@ public class HpValueManager : MonoBehaviour
         HpText.color = color;
         HpRect.anchoredPosition = original;
 
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 20; i++)
         {
             HpText.color += new Color(0, 0, 0, 0.05f);
-            HpRect.anchoredPosition += Vector2.up * 0.1f;
+            HpRect.anchoredPosition += Vector2.up * 0.4f;
             yield return new WaitForSeconds(0.01f);
         }
 

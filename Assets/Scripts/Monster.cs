@@ -39,6 +39,8 @@ public class Monster : MonoBehaviour
     public Transform atkPos;
     public Material monMaterial;
 
+    private bool Atk;
+
     void Start()
     {
         //如何設定攻擊觸發與視野觸發
@@ -47,13 +49,14 @@ public class Monster : MonoBehaviour
         hpValueManager = GetComponentInChildren<HpValueManager>();
         //atkTri = GameObject.Find("攻擊觸發");
         //seeTri = GameObject.Find("視野觸發");
+        Atk = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(AttackCheck());
 
+       
         timer += Time.deltaTime;
         if (timer > 3)
         {
@@ -66,14 +69,14 @@ public class Monster : MonoBehaviour
 
         if (r < 0.5) walk();
         else idle();
-
+        attackCheck();
     }
 
     private void walk()
     {
         ani.SetBool("Walk", true);
         walkTimer += Time.deltaTime;
-       
+        
         if (walkTimer>3)
         {
             walkTimer = 0;
@@ -86,21 +89,38 @@ public class Monster : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
             hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
+            //attackCheck();
         }
         else if (walkDirection == 2)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
             hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
+            //attackCheck();
         }
 
 
     }
-    private void attack()
+    
+
+    private IEnumerator Attack()
     {
-        ani.SetBool("Walk", false);
-        Instantiate(atkEff, new Vector3(atkPos.position.x,atkPos.position.y), Quaternion.identity);
-        ani.SetTrigger("Attack");
+        if(Atk == false)
+        {
+
+            Atk = true;
+            ani.SetBool("Walk", false);
+            
+            ani.SetTrigger("Attack");
+            yield return new WaitForSeconds(0.5f);
+            Instantiate(atkEff, new Vector3(atkPos.position.x , atkPos.position.y), Quaternion.identity);
+
+            yield return new WaitForSeconds(Data.cd);
+            Atk = false;
+
+        }
+       
+        
     }
     private void idle()
     {
@@ -130,20 +150,29 @@ public class Monster : MonoBehaviour
               
     }
 
-    public void poisoning(float damage)
+    public IEnumerator StartPoison(float damage,int duration)
     {
-        for (int i = 0; i < 5; i++)
+        print("毒瓶");
+        print(duration);
+        for (int i = 0; i < duration; i++)
         {
             hp -= damage;
             monMaterial.color = Color.green;
             Invoke("reColor", 0.2f);
-        }
-       
-        hpValueManager.SetHp(hp, hpMax);
-        StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-        if (hp <= 0) StartCoroutine(Dead());
+            hpValueManager.SetHp(hp, hpMax);
+            StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
+            if (hp <= 0) StartCoroutine(Dead());
+            yield return new WaitForSeconds(1);
 
+            
+        }       
+
+       
     }
+
+    
+
+   
     private void reColor()
     {
         monMaterial.color = Color.white;
@@ -152,24 +181,23 @@ public class Monster : MonoBehaviour
 
 
     
-
-
-
-
-    private IEnumerator AttackCheck()
+    private void attackCheck()
     {
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, 3);
 
-        // RaycastHit hit;  //區域變數 碰撞資訊:用來存放射線打到的物件;
 
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position + new Vector3(0, 5, 0), -transform.right, 5);
-        
-        if(hit2D.collider.tag == "玩家")
+
+        if (hit2D.collider.tag == "玩家")
         {
-            print("遇到玩家");
-            attack();
+            print("遇到玩家方法");
+            StartCoroutine(Attack());
         }
-        yield return new WaitForSeconds(Data.cd);
     }
+
+
+
+
+  
 
     //繪製圖示，僅在場景顯示給開發者觀看
     private void OnDrawGizmos()
@@ -181,7 +209,7 @@ public class Monster : MonoBehaviour
         //右方X transform.right
         //上方Y transform.up
         //繪製射線(起點,方向*長度)
-        Gizmos.DrawRay(transform.position + new Vector3(0,5,0) , transform.right * -5);
+        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 5, 0), transform.right * -3);
 
 
     }

@@ -237,6 +237,9 @@ public class Witch : MonoBehaviour
         GameObject temp = Instantiate(poisonBattle, throwPos.position+transform.right*2+transform.up*1, transform.rotation);
         temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 700 + temp.transform.up * 200);
         temp.GetComponent<Rigidbody2D>().AddTorque(500);
+        temp.GetComponent<Battle>().damage = Data.damage*2/5;
+        temp.GetComponent<Battle>().duration = 3;
+        temp.GetComponent<Battle>().player = true;
         speed = 10;
         yield return new WaitForSeconds(Data.battleCD);              
        
