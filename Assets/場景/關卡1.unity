@@ -3558,6 +3558,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: "\u73A9\u5BB6"
       objectReference: {fileID: 0}
+    - target: {fileID: 1669148974170547321, guid: cdea2a4310fa53444a73e14c24e7f5ea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1796602088763660604, guid: cdea2a4310fa53444a73e14c24e7f5ea,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

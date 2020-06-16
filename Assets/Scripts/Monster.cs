@@ -39,6 +39,7 @@ public class Monster : MonoBehaviour
     public Transform Target;
 
     private bool Atk;
+    private bool SeePlayer;
 
     void Start()
     {
@@ -53,12 +54,14 @@ public class Monster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        attackCheck();
-        seeCheck();
 
+        seeCheck();
+        attackCheck();
+        if (SeePlayer) return;
         timer += Time.deltaTime;
         if (timer > 3)
-        {           
+        {
+            print(timer);
             timer = 0;
             r = Random.Range(0f, 1f);                
            
@@ -66,10 +69,14 @@ public class Monster : MonoBehaviour
 
         if (r < 0.5) walk();
         else idle();
-       
+
+
+        
         //如果攻擊  Walk取消  變follow
     }
-
+    /// <summary>
+    /// 走路
+    /// </summary>
     private void walk()
     {
         ani.SetBool("Walk", true);
@@ -86,19 +93,24 @@ public class Monster : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
-            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);           
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
+          
         }
         else if (walkDirection == 2)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
-            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);           
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
+           
         }
         
     }
     
 
-
+    /// <summary>
+    /// 攻擊
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Attack()
     {
         if(Atk == false)
@@ -118,11 +130,17 @@ public class Monster : MonoBehaviour
        
         
     }
+    /// <summary>
+    /// 閒置
+    /// </summary>
     private void idle()
     {
         ani.SetBool("Walk", false);
     }
-  
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Dead()
     {
         ani.SetTrigger("Dead");
@@ -148,8 +166,7 @@ public class Monster : MonoBehaviour
 
     public IEnumerator StartPoison(float damage,int duration)
     {
-        print("毒瓶");
-        print(duration);
+       
         for (int i = 0; i < duration; i++)
         {
             hp -= damage;
@@ -176,25 +193,35 @@ public class Monster : MonoBehaviour
     
     private void attackCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange);
-                
-        if (hit2D.collider.tag == "玩家")
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange ,1<<8);
+
+        if (hit2D.transform != null)
         {
-            print("遇到玩家方法");
-            StartCoroutine(Attack());
+            if (hit2D.collider.tag == "玩家" )
+            {
+                print("碰到玩家");
+                StartCoroutine(Attack());
+                transform.Translate(0, 0, 0);
+            }
         }
+
     }
 
     private void seeCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange, 1<<8);
 
-        if (hit2D.collider.tag == "玩家")
+        if (hit2D.transform != null)
         {
-            print("看見玩家");
-            Target = hit2D.transform;
-           
+            if (hit2D.collider.tag == "玩家")
+            {
+                print("看見玩家");
+                SeePlayer = true;
+
+                transform.Translate(-3 * Time.deltaTime, 0, 0);
+            }
         }
+        
     }
 
 

@@ -194,6 +194,7 @@ public class Witch : MonoBehaviour
         
     }
     float CD;
+    float CDx;
     public IEnumerator Flash()
     {
         
@@ -241,11 +242,19 @@ public class Witch : MonoBehaviour
         temp.GetComponent<Battle>().duration = 3;
         temp.GetComponent<Battle>().player = true;
         speed = 10;
-        yield return new WaitForSeconds(Data.battleCD);              
+
+        while (CDx < Data.battleCD)
+        {
+            CDx += Time.deltaTime;
+            btnBattle.image.fillAmount = CDx / Data.battleCD;
+            yield return null;
+        }
+         
        
         btnBattle.interactable = true;
-        btnBattle.image.fillAmount = 1;
+        
         isThrow = false;
+        CD = 0;
 
     }
     public void Jump()
