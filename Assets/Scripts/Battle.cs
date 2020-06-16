@@ -26,7 +26,7 @@ public class Battle : MonoBehaviour
         {
             print("打到怪");
             //Instantiate(magicPoisonBattle, transform.position, Quaternion.identity);
-            GameObject temp =  Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
+            Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
 
             //StartCoroutine(collision.GetComponent<Monster>().StartPoison(damage,duration));
             collision.GetComponent<Monster>().StartCoroutine(collision.GetComponent<Monster>().StartPoison(damage,duration));        
@@ -34,10 +34,10 @@ public class Battle : MonoBehaviour
         }
 
 
-        if (player && collision.tag == "地板")
+        else if (player && collision.tag == "地板")
         {
             print("打地板");
-
+            GameObject temp = Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
 
             Destroy(gameObject);
         }

@@ -12,10 +12,7 @@ public class Monster : MonoBehaviour
     
     
 
-    //[Header("攻擊觸發")]
-    //public GameObject atkTri;
-    //[Header("視野觸發")]
-    //public GameObject seeTri;
+   
     [Header("攻擊特效")]
     public GameObject atkEff;
     [Header("怪物資料")]
@@ -39,6 +36,8 @@ public class Monster : MonoBehaviour
     public Transform atkPos;
     public Material monMaterial;
 
+    public Transform Target;
+
     private bool Atk;
 
     void Start()
@@ -47,29 +46,28 @@ public class Monster : MonoBehaviour
         hp = Data.HP;
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
-        //atkTri = GameObject.Find("攻擊觸發");
-        //seeTri = GameObject.Find("視野觸發");
+       
         Atk = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        attackCheck();
+        seeCheck();
 
-       
         timer += Time.deltaTime;
         if (timer > 3)
-        {
-            print(timer);
+        {           
             timer = 0;
-
-            r = Random.Range(0f, 1f);                    
-            
+            r = Random.Range(0f, 1f);                
+           
         }
 
         if (r < 0.5) walk();
         else idle();
-        attackCheck();
+       
+        //如果攻擊  Walk取消  變follow
     }
 
     private void walk()
@@ -88,20 +86,18 @@ public class Monster : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
-            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
-            //attackCheck();
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);           
         }
         else if (walkDirection == 2)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);  //0或180??
             transform.Translate(-3 * Time.deltaTime, 0, 0);
-            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
-            //attackCheck();
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);           
         }
-
-
+        
     }
     
+
 
     private IEnumerator Attack()
     {
@@ -158,16 +154,14 @@ public class Monster : MonoBehaviour
         {
             hp -= damage;
             monMaterial.color = Color.green;
-            Invoke("reColor", 0.2f);
+            Invoke("reColor", 0.5f);
             hpValueManager.SetHp(hp, hpMax);
             StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
             if (hp <= 0) StartCoroutine(Dead());
             yield return new WaitForSeconds(1);
-
-            
+                        
         }       
-
-       
+               
     }
 
     
@@ -175,18 +169,15 @@ public class Monster : MonoBehaviour
    
     private void reColor()
     {
-        monMaterial.color = Color.white;
-       
+        monMaterial.color = Color.white;       
     }
 
 
     
     private void attackCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, 3);
-
-
-
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange);
+                
         if (hit2D.collider.tag == "玩家")
         {
             print("遇到玩家方法");
@@ -194,10 +185,20 @@ public class Monster : MonoBehaviour
         }
     }
 
+    private void seeCheck()
+    {
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange);
+
+        if (hit2D.collider.tag == "玩家")
+        {
+            print("看見玩家");
+            Target = hit2D.transform;
+           
+        }
+    }
 
 
 
-  
 
     //繪製圖示，僅在場景顯示給開發者觀看
     private void OnDrawGizmos()
@@ -209,7 +210,10 @@ public class Monster : MonoBehaviour
         //右方X transform.right
         //上方Y transform.up
         //繪製射線(起點,方向*長度)
-        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 5, 0), transform.right * -3);
+        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 5, 0), transform.right * -Data.atkRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 4, 0), transform.right * -Data.seeRange);
 
 
     }
