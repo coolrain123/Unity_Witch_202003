@@ -38,8 +38,9 @@ public class Monster : MonoBehaviour
 
     public Transform Target;
 
-    private bool Atk;
+   
     private bool SeePlayer;
+    private bool actionAtk;
 
     void Start()
     {
@@ -47,8 +48,8 @@ public class Monster : MonoBehaviour
         hp = Data.HP;
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
-       
-        Atk = false;
+
+        actionAtk = false;
     }
 
     // Update is called once per frame
@@ -75,12 +76,7 @@ public class Monster : MonoBehaviour
         //如果攻擊  Walk取消  變follow
     }
 
-    private void Closing()
-    {
-        ani.SetBool("Walk", true);
-        transform.Translate(-5 * Time.deltaTime, 0, 0);
-        attackCheck();
-    }
+    
 
 
     /// <summary>
@@ -121,30 +117,30 @@ public class Monster : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private IEnumerator Attack()
-    {
-        if(Atk == false)
+    {                  
+        if(actionAtk==false)
         {
-
-            Atk = true;
+            actionAtk = true;
             ani.SetBool("Walk", false);
-            
+
             ani.SetTrigger("Attack");
-            yield return new WaitForSeconds(0.5f);
-            Instantiate(atkEff, new Vector3(atkPos.position.x , atkPos.position.y), Quaternion.identity);
+            yield return new WaitForSeconds(0.8f);
+            Instantiate(atkEff, new Vector3(atkPos.position.x, atkPos.position.y), Quaternion.identity);
 
             yield return new WaitForSeconds(Data.cd);
-            Atk = false;
-
+            actionAtk = false;
         }
-       
-        
+                       
+                
     }
+
     /// <summary>
     /// 閒置
     /// </summary>
     private void idle()
     {
         ani.SetBool("Walk", false);
+        transform.Translate(0, 0, 0);
     }
     /// <summary>
     /// 死亡
@@ -197,38 +193,53 @@ public class Monster : MonoBehaviour
 
 
     
+   
+    float closeSpeed;
+    bool atkIn;
+    private void seeCheck()
+    {
+        RaycastHit2D hit2DSee = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange);
+        
+        if (hit2DSee.transform != null)
+        {
+            //if (atkIn) return;
+            if (hit2DSee.collider.tag == "玩家")
+            {
+                print("看見玩家");
+                SeePlayer = true;
+                ani.SetBool("Walk", true);
+                transform.Translate(closeSpeed * Time.deltaTime, 0, 0);
+                attackCheck();
+                if (atkIn) closeSpeed = 0;
+                else closeSpeed = -5;
+            }
+        }
+        else if (hit2DSee.transform == null)
+        {
+            SeePlayer = false;
+        }
+
+    }
+
     private void attackCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange, 1 << 8);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange);
 
         if (hit2D.transform != null)
         {
             if (hit2D.collider.tag == "玩家")
             {
+                atkIn = true;
                 print("碰到玩家");
-                SeePlayer = false;
-                StartCoroutine(Attack());
-                transform.Translate(0, 0, 0);
-            }
+                ani.SetBool("Walk", false);
+                closeSpeed = 0;
+                StartCoroutine(Attack());               
+            }           
         }
-
-    }
-
-    private void seeCheck()
-    {
-        RaycastHit2D hit2DSee = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange, 1<<8);
-
-        if (hit2DSee.transform != null)
+        else if (hit2D.transform == null)
         {
-            if (hit2DSee.collider.tag == "玩家")
-            {
-                print("看見玩家");
-                SeePlayer = true;
-                Closing();
-
-            }
+            atkIn = false;
         }
-        
     }
 
 
