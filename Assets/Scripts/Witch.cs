@@ -254,7 +254,7 @@ public class Witch : MonoBehaviour
         btnBattle.interactable = true;
         
         isThrow = false;
-        CD = 0;
+        CDx = 0;
 
     }
     public void Jump()

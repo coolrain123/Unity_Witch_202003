@@ -56,7 +56,7 @@ public class Monster : MonoBehaviour
     {
 
         seeCheck();
-        attackCheck();
+        
         if (SeePlayer) return;
         timer += Time.deltaTime;
         if (timer > 3)
@@ -74,8 +74,17 @@ public class Monster : MonoBehaviour
         
         //如果攻擊  Walk取消  變follow
     }
+
+    private void Closing()
+    {
+        ani.SetBool("Walk", true);
+        transform.Translate(-5 * Time.deltaTime, 0, 0);
+        attackCheck();
+    }
+
+
     /// <summary>
-    /// 走路
+    /// 閒晃
     /// </summary>
     private void walk()
     {
@@ -180,9 +189,6 @@ public class Monster : MonoBehaviour
         }       
                
     }
-
-    
-
    
     private void reColor()
     {
@@ -193,13 +199,14 @@ public class Monster : MonoBehaviour
     
     private void attackCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange ,1<<8);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange, 1 << 8);
 
         if (hit2D.transform != null)
         {
-            if (hit2D.collider.tag == "玩家" )
+            if (hit2D.collider.tag == "玩家")
             {
                 print("碰到玩家");
+                SeePlayer = false;
                 StartCoroutine(Attack());
                 transform.Translate(0, 0, 0);
             }
@@ -209,16 +216,16 @@ public class Monster : MonoBehaviour
 
     private void seeCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange, 1<<8);
+        RaycastHit2D hit2DSee = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange, 1<<8);
 
-        if (hit2D.transform != null)
+        if (hit2DSee.transform != null)
         {
-            if (hit2D.collider.tag == "玩家")
+            if (hit2DSee.collider.tag == "玩家")
             {
                 print("看見玩家");
                 SeePlayer = true;
+                Closing();
 
-                transform.Translate(-3 * Time.deltaTime, 0, 0);
             }
         }
         
