@@ -141,22 +141,26 @@ public class Witch : MonoBehaviour
         {            
             ani.SetBool("Walk", true);
             transform.eulerAngles = new Vector3(0, 0, 0);
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
             ani.SetBool("Walk", false);
             transform.eulerAngles = new Vector3(0, 0, 0);
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
 
         if (Input.GetKey(KeyCode.A))
         {            
             ani.SetBool("Walk", true);
             transform.eulerAngles = new Vector3(0, 180, 0);
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
             ani.SetBool("Walk", false);
             transform.eulerAngles = new Vector3(0, 180, 0);
+            hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
         }
 
         //float v = Input.GetAxis("Vertical");   //Vertical:WS上下
