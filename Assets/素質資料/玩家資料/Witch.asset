@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Witch
   m_EditorClassIdentifier: 
   HP: 200
-  HpMax: 100
+  HpMax: 200
   damage: 50
   flashCD: 5
   battleCD: 7

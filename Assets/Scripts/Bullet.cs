@@ -30,10 +30,12 @@ public class Bullet : MonoBehaviour
             other.GetComponent<Monster>().hurt(damage);   //取得<敵人> 的 hurt 方法            
             Destroy(gameObject);
         }
-        if (player && other.tag == "障礙物")
+        if (other.tag == "玩家" )
         {
 
-            Destroy(gameObject);
+            print("打到玩家");
+            other.GetComponent<Witch>().hurt(damage);   //取得<敵人> 的 hurt 方法            
+            
         }
     }
 

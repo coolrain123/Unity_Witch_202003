@@ -66,9 +66,12 @@ public class Witch : MonoBehaviour
     private bool isFlash;
     private bool isThrow;
     private bool isCasting;
+    private bool isDead;
+
 
     private float hp;
     private float hpMax;
+    private int rDmg;
     public Material witchMaterial;
 
     private void Start()
@@ -182,9 +185,9 @@ public class Witch : MonoBehaviour
             aud.PlayOneShot(audMagicBall, 0.7f);
             yield return new WaitForSeconds(0.5f);
             GameObject temp = Instantiate(magicBall, new Vector3(magicPos.position.x, magicPos.position.y, 0), transform.rotation);
-
+            rDmg = Random.Range(0, 10);
             temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 1000);
-            temp.AddComponent<Bullet>().damage = Data.damage;            
+            temp.AddComponent<Bullet>().damage = Data.damage + rDmg ;            
             temp.GetComponent<Bullet>().player = true;
              yield return new WaitForSeconds(0.5f);
 
@@ -238,7 +241,8 @@ public class Witch : MonoBehaviour
         GameObject temp = Instantiate(poisonBattle, throwPos.position+transform.right*2+transform.up*1, transform.rotation);
         temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 700 + temp.transform.up * 200);
         temp.GetComponent<Rigidbody2D>().AddTorque(500);
-        temp.GetComponent<Battle>().damage = Data.damage*2/5;
+        rDmg = Random.Range(0, 10);
+        temp.GetComponent<Battle>().damage = Data.damage*2/5  +rDmg;
         temp.GetComponent<Battle>().duration = 3;
         temp.GetComponent<Battle>().player = true;
         speed = 10;
@@ -279,6 +283,7 @@ public class Witch : MonoBehaviour
 
     public void hurt(float damage)
     {
+        if (isDead) return;
         hp -= damage;
         witchMaterial.color =new Color(1,0.49f,0.49f,1);
         Invoke("reColor", 0.2f);
@@ -294,10 +299,13 @@ public class Witch : MonoBehaviour
 
     public IEnumerator Dead()
     {
+
         ani.SetTrigger("Dead");
         GetComponent<Witch>().enabled = false;
-        GetComponent<BoxCollider2D>().enabled = false;
+        isDead = true;
         yield return new WaitForSeconds(3f);
      
     }
+
+  
 }

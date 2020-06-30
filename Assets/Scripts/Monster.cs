@@ -125,8 +125,11 @@ public class Monster : MonoBehaviour
 
             ani.SetTrigger("Attack");
             yield return new WaitForSeconds(0.8f);
-            Instantiate(atkEff, new Vector3(atkPos.position.x, atkPos.position.y), Quaternion.identity);
+            GameObject temp =  Instantiate(atkEff, new Vector3(atkPos.position.x, atkPos.position.y), Quaternion.identity);
 
+            int rDmg = Random.Range(1, 8); 
+            temp.AddComponent<Bullet>().damage = Data.damage +rDmg ;
+            temp.GetComponent<Bullet>().player = false;
             yield return new WaitForSeconds(Data.cd);
             actionAtk = false;
         }
@@ -241,8 +244,7 @@ public class Monster : MonoBehaviour
             atkIn = false;
         }
     }
-
-
+   
 
 
     //繪製圖示，僅在場景顯示給開發者觀看
