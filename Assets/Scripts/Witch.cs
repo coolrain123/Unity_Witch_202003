@@ -87,6 +87,7 @@ public class Witch : MonoBehaviour
         hpValueManager = GetComponentInChildren<HpValueManager>();
         hp = Data.HP;
         hpMax = Data.HpMax;
+        witchMaterial.color = Color.white;
 
     }
 
@@ -137,26 +138,28 @@ public class Witch : MonoBehaviour
     }
     public void Move()
     {
-        if (Input.GetKey(KeyCode.D))
+        
+        float joyh = joy.Horizontal;
+        if (Input.GetKey(KeyCode.D) || joyh > 0)
         {            
             ani.SetBool("Walk", true);
             transform.eulerAngles = new Vector3(0, 0, 0);
             hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D) )
         {
             ani.SetBool("Walk", false);
             transform.eulerAngles = new Vector3(0, 0, 0);
             hpValueManager.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || joyh < 0)
         {            
             ani.SetBool("Walk", true);
             transform.eulerAngles = new Vector3(0, 180, 0);
             hpValueManager.transform.localEulerAngles = new Vector3(0, 180, 0);
         }
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A) )
         {
             ani.SetBool("Walk", false);
             transform.eulerAngles = new Vector3(0, 180, 0);
@@ -165,11 +168,14 @@ public class Witch : MonoBehaviour
 
         //float v = Input.GetAxis("Vertical");   //Vertical:WS上下
         float h = Input.GetAxis("Horizontal"); //Horizontal:AD左右
-        transform.Translate(speed * Time.deltaTime *Mathf.Abs(h), 0, 0);
 
-       // float joyv = joy.Vertical;
-       // float joyh = joy.Horizontal;
-       // transform.Translate(speed * Time.deltaTime * joyh, 0, speed * Time.deltaTime * joyv);
+        if(joyh == 0)
+        {
+            ani.SetBool("Walk", false);
+        }
+        transform.Translate(speed * Time.deltaTime * Mathf.Abs(h), 0, 0);
+
+        transform.Translate(speed * Time.deltaTime * Mathf.Abs(joyh), 0, 0);
 
         Vector2 pos = transform.position;    
 
@@ -249,6 +255,7 @@ public class Witch : MonoBehaviour
         temp.GetComponent<Battle>().damage = Data.damage*2/5  +rDmg;
         temp.GetComponent<Battle>().duration = 3;
         temp.GetComponent<Battle>().player = true;
+        
         speed = 10;
 
         while (CDx < Data.battleCD)
@@ -306,9 +313,10 @@ public class Witch : MonoBehaviour
 
         ani.SetTrigger("Dead");
         GetComponent<Witch>().enabled = false;
+        
         isDead = true;
-        yield return new WaitForSeconds(3f);
-     
+        yield return new WaitForSeconds(1f);
+        witchMaterial.color = new Color(0.5f, 0.5f, 0.5f, 1);
     }
 
   

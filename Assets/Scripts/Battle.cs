@@ -15,8 +15,7 @@ public class Battle : MonoBehaviour
 
     private void Start()
     {
-
-        //Data = GameObject.Find("Witch").GetComponent<PlayerData>();
+               
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,8 +25,9 @@ public class Battle : MonoBehaviour
         {
             print("打到怪");
             //Instantiate(magicPoisonBattle, transform.position, Quaternion.identity);
-            Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
-
+            GameObject temp =  Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
+            temp.GetComponent<CircleCollider2D>().enabled = false;
+            
             //StartCoroutine(collision.GetComponent<Monster>().StartPoison(damage,duration));
             collision.GetComponent<Monster>().StartCoroutine(collision.GetComponent<Monster>().StartPoison(damage,duration));        
             Destroy(gameObject);
@@ -39,6 +39,9 @@ public class Battle : MonoBehaviour
             print("打地板");
             GameObject temp = Instantiate(magicPoisonBattle, transform.position, Quaternion.Euler(90, 0, 0));
 
+            temp.GetComponent<Poison>().damage = damage;
+            temp.GetComponent<Poison>().duration = duration;
+            temp.GetComponent<Poison>().player = true;
             Destroy(gameObject);
         }
     }

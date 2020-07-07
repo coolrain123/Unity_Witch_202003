@@ -122,9 +122,10 @@ GameObject:
   - component: {fileID: 8646431675398392057}
   - component: {fileID: 8646431675406671321}
   - component: {fileID: -6400314116707999649}
+  - component: {fileID: 3660526940910255816}
   m_Layer: 0
   m_Name: "\u6BD2\u74F6\u7279\u6548"
-  m_TagString: Untagged
+  m_TagString: "\u9B54\u6CD5"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4865,7 +4866,22 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4.67
+  m_Radius: 4.6
+--- !u!114 &3660526940910255816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8646431675416356921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc149a7d8494fe46bb2ae6dd710f83c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  player: 0
+  duration: 0
 --- !u!1 &8646431675416356923
 GameObject:
   m_ObjectHideFlags: 0

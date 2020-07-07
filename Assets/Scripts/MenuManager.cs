@@ -8,6 +8,8 @@ public class MenuManager : MonoBehaviour
 {
     [Header("載入畫面")]
     public GameObject panelLoading;
+    [Header("暫停畫面")]
+    public GameObject panelPause;
     [Header("載入畫面文字")]
     public Text textLoading;
     [Header("載入畫面讀條")]
@@ -24,7 +26,7 @@ public class MenuManager : MonoBehaviour
         print("開始載入....");
         panelLoading.SetActive(true);        
         //SceneManager.LoadScene("關卡1");
-        StartCoroutine(Loading());
+        
     }
 
     /// <summary>
@@ -47,5 +49,21 @@ public class MenuManager : MonoBehaviour
             if (ao.progress == 0.9f)
                 ao.allowSceneActivation = true;
         }
+    }
+
+    public void Pause()
+    {
+        panelPause.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("場景/學院介面");
+    }
+    public void BackToGame()
+    {
+        panelPause.SetActive(false);
+        Time.timeScale = 1;
     }
 }

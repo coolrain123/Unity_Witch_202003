@@ -49,6 +49,12 @@ public class Monster : MonoBehaviour
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
 
+        //for (int i = 1; i < 8; i++)
+        //{
+        //    transform.GetChild(i).GetComponent<Image>().material = Instantiate(transform.GetChild(i).GetComponent<Image>().material);
+        //}
+        
+
         actionAtk = false;
     }
 
@@ -177,12 +183,14 @@ public class Monster : MonoBehaviour
        
         for (int i = 0; i < duration; i++)
         {
+            
             hp -= damage;
+            if (hp <= 0) StartCoroutine(Dead());
             monMaterial.color = Color.green;
             Invoke("reColor", 0.5f);
             hpValueManager.SetHp(hp, hpMax);
             StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-            if (hp <= 0) StartCoroutine(Dead());
+            
             yield return new WaitForSeconds(1);
                         
         }       
@@ -201,7 +209,7 @@ public class Monster : MonoBehaviour
     bool atkIn;
     private void seeCheck()
     {
-        RaycastHit2D hit2DSee = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.seeRange);
+        RaycastHit2D hit2DSee = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 8, 0), -transform.right, Data.seeRange);
         
         if (hit2DSee.transform != null)
         {
@@ -226,7 +234,7 @@ public class Monster : MonoBehaviour
 
     private void attackCheck()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 5, 0), -transform.right, Data.atkRange);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position - transform.right + new Vector3(0, 8, 0), -transform.right, Data.atkRange);
 
         if (hit2D.transform != null)
         {
@@ -257,12 +265,14 @@ public class Monster : MonoBehaviour
         //右方X transform.right
         //上方Y transform.up
         //繪製射線(起點,方向*長度)
-        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 5, 0), transform.right * -Data.atkRange);
+        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 8, 0), transform.right * -Data.atkRange);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 4, 0), transform.right * -Data.seeRange);
+        Gizmos.DrawRay(transform.position - transform.right + new Vector3(0, 8, 0), transform.right * -Data.seeRange);
 
 
     }
+
+   
 
 }
