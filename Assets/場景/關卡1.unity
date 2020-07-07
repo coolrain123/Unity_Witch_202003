@@ -367,15 +367,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 72855622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f794524a5d4fd78479f41a8cb2aa03be, type: 3}
+  m_Script: {fileID: 11500000, guid: 375df5174d9ab584fbae843e5d9020fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelLoading: {fileID: 0}
   panelPause: {fileID: 1825273989}
-  textLoading: {fileID: 0}
-  imgLoading: {fileID: 0}
-  audStart: {fileID: 0}
-  aud: {fileID: 0}
 --- !u!1 &84254445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,7 +1397,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 72855626}
-        m_MethodName: Pause
+        m_MethodName: PauseBB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2873,7 +2868,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 72855626}
+      objectReference: {fileID: 0}
+    - target: {fileID: 5895302593197692904, guid: 89ebb6773328663499d921d6d171bf67,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToGame
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89ebb6773328663499d921d6d171bf67, type: 3}
 --- !u!1001 &5964568882753160599

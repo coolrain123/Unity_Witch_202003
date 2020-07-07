@@ -25,7 +25,7 @@ public class MenuManager : MonoBehaviour
         aud.PlayOneShot(audStart, 0.7f);
         print("開始載入....");
         panelLoading.SetActive(true);        
-        //SceneManager.LoadScene("關卡1");
+        SceneManager.LoadScene("學院介面");
         
     }
 
@@ -51,19 +51,5 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void Pause()
-    {
-        panelPause.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene("場景/學院介面");
-    }
-    public void BackToGame()
-    {
-        panelPause.SetActive(false);
-        Time.timeScale = 1;
-    }
+  
 }
