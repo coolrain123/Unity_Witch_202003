@@ -49,10 +49,13 @@ public class Monster : MonoBehaviour
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
 
-        //for (int i = 1; i < 8; i++)
-        //{
-        //    transform.GetChild(i).GetComponent<Image>().material = Instantiate(transform.GetChild(i).GetComponent<Image>().material);
-        //}
+
+        for (int i = 1; i < 8; i++)
+        {
+            transform.GetChild(i).GetComponent<SpriteRenderer>().material = Instantiate(transform.GetChild(i).GetComponent<SpriteRenderer>().material);
+        }
+        
+        
         
 
         actionAtk = false;

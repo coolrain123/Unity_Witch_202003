@@ -20,7 +20,7 @@ public class CameraCtrl : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, witpos, 0.4f * Time.deltaTime * speed);
 
         Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, 10.7f, 200f);
+        pos.x = Mathf.Clamp(pos.x, 10.7f, 130f);
    
         transform.position = pos;
     }
