@@ -17,4 +17,8 @@ public class MonsterData : ScriptableObject
     [Header("視野範圍"), Range(0, 50f)]
     public float seeRange = 5f;
 
+    [Header("普通掉落物機率"), Range(0, 1f)]
+    public float propDropPer;
+    [Header("罕見掉落物機率"), Range(0, 1f)]
+    public float propDropRarePer;
 }

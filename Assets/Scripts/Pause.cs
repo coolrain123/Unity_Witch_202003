@@ -18,6 +18,7 @@ public class Pause : MonoBehaviour
     public void BackToMenu()
     {
         SceneManager.LoadScene("場景/學院介面");
+        Time.timeScale = 1;
     }
     public void BackToGame()
     {

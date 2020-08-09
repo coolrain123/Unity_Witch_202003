@@ -26,11 +26,15 @@ public class Witch : MonoBehaviour
     public GameObject magicPoisonBattle;
     [Header("跳躍特效")]
     public GameObject magicJump;
+    [Header("撿取特效")]
+    public GameObject magicPick;
     /// <summary>
     /// 音效
     /// </summary>
     [Header("魔法彈音效")]
     public AudioClip audMagicBall;
+    [Header("撿取音效")]
+    public AudioClip audPickup;
 
     /// <summary>
     /// 按鈕
@@ -192,7 +196,7 @@ public class Witch : MonoBehaviour
             speed = 0;
             isAttack = true;
             ani.SetTrigger("Attack");
-            aud.PlayOneShot(audMagicBall, 0.7f);
+            aud.PlayOneShot(audMagicBall, 0.3f);
             yield return new WaitForSeconds(0.5f);
             GameObject temp = Instantiate(magicBall, new Vector3(magicPos.position.x, magicPos.position.y, 0), transform.rotation);
             rDmg = Random.Range(0, 10);
@@ -248,7 +252,7 @@ public class Witch : MonoBehaviour
        
         ani.SetTrigger("Throw");
         yield return new WaitForSeconds(0.7f);
-        GameObject temp = Instantiate(poisonBattle, throwPos.position+transform.right*2+transform.up*1, transform.rotation);
+        GameObject temp = Instantiate(poisonBattle, throwPos.position + transform.right * 2 + transform.up * 1, transform.rotation);
         temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 700 + temp.transform.up * 200);
         temp.GetComponent<Rigidbody2D>().AddTorque(500);
         rDmg = Random.Range(0, 10);
@@ -289,6 +293,14 @@ public class Witch : MonoBehaviour
         {
             isGrounded = true;
             print("在地上");
+        }
+
+        if (collision.gameObject.tag == "掉落物")
+        {
+            print("撿取");
+            Instantiate(magicPick, throwPos.position + transform.up * -1, Quaternion.identity);
+            aud.PlayOneShot(audPickup, 1f);
+            Destroy(collision.gameObject);                   
         }
     }
 

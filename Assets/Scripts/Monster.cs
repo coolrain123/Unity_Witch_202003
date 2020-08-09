@@ -18,10 +18,10 @@ public class Monster : MonoBehaviour
     [Header("怪物資料")]
     public MonsterData Data;
 
-    //[Header("補血藥水")]
-    //public GameObject propHp;
-    //[Header("加速藥水")]
-    //public GameObject propCd;
+    [Header("普通掉落")]
+    public GameObject propDrop;
+    [Header("罕見掉落")]
+    public GameObject propRare;
     //[Header("子彈")]
     //public GameObject bullet;
     //public SpriteRenderer[] spr;
@@ -48,20 +48,26 @@ public class Monster : MonoBehaviour
         hp = Data.HP;
         hpMax = Data.HpMax;
         hpValueManager = GetComponentInChildren<HpValueManager>();
-
+        HandleCollision();
 
         for (int i = 1; i < 8; i++)
         {
             transform.GetChild(i).GetComponent<SpriteRenderer>().material = Instantiate(transform.GetChild(i).GetComponent<SpriteRenderer>().material);
-        }
-        
-        
-        
+        }                      
 
         actionAtk = false;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// 控制忽略碰撞
+    /// </summary>
+    private void HandleCollision()
+    {
+        Physics.IgnoreLayerCollision(9, 9);
+        
+    }
+
+    
     void Update()
     {
 
@@ -163,11 +169,20 @@ public class Monster : MonoBehaviour
         ani.SetTrigger("Dead");
         GetComponent<Monster>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
-        yield return new WaitForSeconds(3f);
+        dropProp();
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
-   
+    public void dropProp()
+    {
+        float rDrop = Random.Range(0f, 1f);
+        if (rDrop < Data.propDropPer) Instantiate(propDrop, transform.position + Vector3.up *10, Quaternion.identity);
+
+        float rRareDrop = Random.Range(0f, 1f);
+        if (rRareDrop < Data.propDropRarePer) Instantiate(propRare, transform.position + Vector3.up * 15, Quaternion.identity);
+    }
+
 
     public void hurt(float damage)
     {

@@ -18,3 +18,5 @@ MonoBehaviour:
   damage: 50
   atkRange: 1.7
   seeRange: 20
+  propDropPer: 1
+  propDropRarePer: 0.3
