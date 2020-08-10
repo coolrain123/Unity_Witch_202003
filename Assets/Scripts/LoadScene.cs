@@ -20,7 +20,7 @@ public class LoadScene : MonoBehaviour
     }
     public void LoadStage()
     {
-       
+        
         aud.PlayOneShot(audStart, 0.7f);              
        
         SceneManager.LoadScene("關卡1");
