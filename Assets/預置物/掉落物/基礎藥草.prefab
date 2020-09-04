@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4433450025249412764}
   - component: {fileID: 738720633298331025}
   - component: {fileID: 1223795594915295996}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: "\u57FA\u790E\u85E5\u8349"
   m_TagString: "\u6389\u843D\u7269"
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1656829474253446421}
   - component: {fileID: 411202349974299064}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: clover
   m_TagString: Untagged
   m_Icon: {fileID: 0}

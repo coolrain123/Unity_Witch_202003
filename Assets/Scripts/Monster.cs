@@ -53,7 +53,7 @@ public class Monster : MonoBehaviour
         for (int i = 1; i < 8; i++)
         {
             transform.GetChild(i).GetComponent<SpriteRenderer>().material = Instantiate(transform.GetChild(i).GetComponent<SpriteRenderer>().material);
-        }                      
+        }
 
         actionAtk = false;
     }
@@ -63,8 +63,10 @@ public class Monster : MonoBehaviour
     /// </summary>
     private void HandleCollision()
     {
-        Physics.IgnoreLayerCollision(9, 9);
-        
+       
+        Physics2D.IgnoreLayerCollision(9, 9);
+        Physics2D.IgnoreLayerCollision(9, 10);
+        Physics2D.IgnoreLayerCollision(10,10);
     }
 
     

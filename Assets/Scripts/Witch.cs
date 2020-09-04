@@ -12,6 +12,7 @@ public class Witch : MonoBehaviour
     public float flashLength = 3;
     [Header("玩家資料")]
     public PlayerData Data;
+  
 
     /// <summary>
     /// 特效
@@ -72,6 +73,8 @@ public class Witch : MonoBehaviour
     private bool isCasting;
     private bool isDead;
 
+    [Header("死亡畫面")]
+    public GameObject panelDead;
 
     private float hp;
     private float hpMax;
@@ -329,6 +332,10 @@ public class Witch : MonoBehaviour
         isDead = true;
         yield return new WaitForSeconds(1f);
         witchMaterial.color = new Color(0.5f, 0.5f, 0.5f, 1);
+
+        panelDead.SetActive(true);
+        Time.timeScale = 0;
+
     }
 
   
