@@ -302,7 +302,7 @@ public class Witch : MonoBehaviour
         {
             print("撿取");
             Instantiate(magicPick, throwPos.position + transform.up * -1, Quaternion.identity);
-            aud.PlayOneShot(audPickup, 1f);
+            aud.PlayOneShot(audPickup, 0.5f);
             Destroy(collision.gameObject);                   
         }
     }

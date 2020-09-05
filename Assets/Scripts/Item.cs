@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("撿取特效")]
+    public GameObject magicPick;
+   
+
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    private void OnMouseDown()
+   
+    public void OnMouseDown()
     {
         Debug.Log("點擊到");
-        Destroy(this);
-
+       
+        Instantiate(magicPick, transform.position + transform.up * 2, Quaternion.identity);
+        Destroy(gameObject);
     }
 }
