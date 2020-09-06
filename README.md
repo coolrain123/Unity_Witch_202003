@@ -10,5 +10,5 @@
  企劃 王重鈞
 
 網頁版
-https://coolrain123.github.io/Unity_Witch_202003/EXE/index.HTML
+https://coolrain123.github.io/Unity_Witch_202003/EXE/index
 
