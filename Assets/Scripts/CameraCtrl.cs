@@ -4,6 +4,11 @@ public class CameraCtrl : MonoBehaviour
 {
     public Transform Witch;
 
+
+    [Header("場景限制")]
+    public float SceneLeft;
+    public float SceneRight;
+
     [Header("追蹤速度"), Range(1, 100)]
     public float speed = 1;
 
@@ -20,7 +25,7 @@ public class CameraCtrl : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, witpos, 0.4f * Time.deltaTime * speed);
 
         Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, 10.7f, 130f);
+        pos.x = Mathf.Clamp(pos.x, SceneLeft, SceneRight);
    
         transform.position = pos;
     }

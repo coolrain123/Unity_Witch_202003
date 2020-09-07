@@ -50,10 +50,14 @@ public class Monster : MonoBehaviour
         hpValueManager = GetComponentInChildren<HpValueManager>();
         HandleCollision();
 
-        for (int i = 1; i < 8; i++)
-        {
-            transform.GetChild(i).GetComponent<SpriteRenderer>().material = Instantiate(transform.GetChild(i).GetComponent<SpriteRenderer>().material);
-        }
+
+        //如何抓材質變為群組並變色
+        //Transform monTrans = GetComponent<Transform>();
+        //for (int i = 1; i < 8; i++)
+        //{
+        //    transform.GetChild(i).GetComponent<SpriteRenderer>().material = Instantiate(transform.GetChild(i).GetComponent<SpriteRenderer>().material);
+        //    Material[] m = monTrans.GetChild(i).GetComponent<SpriteRenderer>().material;   //取得材質
+        //}
 
         actionAtk = false;
     }
@@ -171,8 +175,11 @@ public class Monster : MonoBehaviour
         ani.SetTrigger("Dead");
         GetComponent<Monster>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        
+       
         dropProp();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
         Destroy(gameObject);
     }
 
@@ -189,12 +196,13 @@ public class Monster : MonoBehaviour
     public void hurt(float damage)
     {
         hp -= damage;
-        monMaterial.color = Color.red;      
-        Invoke("reColor", 0.2f);
+        //monMaterial.color = Color.red;      
+        //Invoke("reColor", 0.2f);
         
         hpValueManager.SetHp(hp, hpMax);
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
         if (hp <= 0) StartCoroutine(Dead());
+
               
     }
 
@@ -206,8 +214,8 @@ public class Monster : MonoBehaviour
             
             hp -= damage;
             if (hp <= 0) StartCoroutine(Dead());
-            monMaterial.color = Color.green;
-            Invoke("reColor", 0.5f);
+            //monMaterial.color = Color.green;
+            //Invoke("reColor", 0.5f);
             hpValueManager.SetHp(hp, hpMax);
             StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
             

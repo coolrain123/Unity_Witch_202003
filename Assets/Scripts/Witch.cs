@@ -259,7 +259,7 @@ public class Witch : MonoBehaviour
         temp.GetComponent<Rigidbody2D>().AddForce(temp.transform.right * 700 + temp.transform.up * 200);
         temp.GetComponent<Rigidbody2D>().AddTorque(500);
         rDmg = Random.Range(0, 10);
-        temp.GetComponent<Battle>().damage = Data.damage*2/5  +rDmg;
+        temp.GetComponent<Battle>().damage = Data.damage*6/5  +rDmg;
         temp.GetComponent<Battle>().duration = 3;
         temp.GetComponent<Battle>().player = true;
         
@@ -295,16 +295,16 @@ public class Witch : MonoBehaviour
         if (collision.gameObject.tag == "地板")
         {
             isGrounded = true;
-            print("在地上");
+           
         }
 
         if (collision.gameObject.tag == "掉落物")
-        {
-            print("撿取");
+        {            
             Instantiate(magicPick, throwPos.position + transform.up * -1, Quaternion.identity);
             aud.PlayOneShot(audPickup, 0.5f);
             Destroy(collision.gameObject);                   
         }
+       
     }
 
     public void hurt(float damage)
